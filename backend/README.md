@@ -93,18 +93,14 @@ The API will be available at:
 
 ```
 backend/
-├── main.py              # FastAPI application entry point
-├── requirements.txt     # Python dependencies
-├── .env.example        # Environment variables template
-├── app/
-│   ├── __init__.py
-│   ├── api/            # API route handlers
-│   ├── core/           # Core functionality and config
-│   ├── models/         # Pydantic models
-│   ├── services/       # Business logic services
-│   └── utils/          # Utility functions
-├── tests/              # Unit and integration tests
-└── docs/               # Additional documentation
+├── app                  # "app" is a Python package
+│   ├── __init__.py      # this file makes "app" a "Python package"
+│   ├── main.py          # "main" module, e.g. import app.main
+│   ├── dependencies.py  # "dependencies" module, e.g. import app.dependencies
+│   └── routers          # "routers" is a "Python subpackage"
+│       ├── __init__.py  # makes "routers" a "Python subpackage"
+│       ├── items.py     # "items" submodule, e.g. import app.routers.items
+│       └── users.py     # "users" submodule, e.g. import app.routers.users
 ```
 
 ## 🔧 Development
