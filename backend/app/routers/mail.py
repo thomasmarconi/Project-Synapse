@@ -43,8 +43,6 @@ async def get_all_mail_messages():
 @router.get("/messages/{user_id}")
 async def get_user_messages(user_id: str):
     """Function to get messages for a single user."""
-    if not user_id:
-        return {"error": "User ID is required"}
     try:
         user_messages = await graph_client.users.by_user_id(user_id).messages.get()
         return [message for message in user_messages.value]
