@@ -1,9 +1,9 @@
 """This file is part of Project Synapse."""
 import os
+from typing import Annotated
 from azure.identity.aio import ClientSecretCredential
 from msgraph.graph_service_client import GraphServiceClient
 from dotenv import load_dotenv
-from typing import Annotated
 from fastapi import Header, HTTPException
 
 

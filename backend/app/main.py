@@ -1,6 +1,6 @@
 """This file is part of Project Synapse."""
 from fastapi import FastAPI
-from app.routers import users
+from app.routers import users, mail
 
 app = FastAPI(
     title="Project Synapse API",
@@ -9,6 +9,7 @@ app = FastAPI(
 )
 
 app.include_router(users.router)
+app.include_router(mail.router)
 
 @app.get("/")
 async def root():
