@@ -18,9 +18,9 @@ This project connects to a Microsoft 365 tenant and automatically:
 | Layer        | Technology |
 |--------------|------------|
 | Backend API  | FastAPI (Python) |
-| Frontend     | Next.js + TypeScript |
+| Frontend     | Remix.js + TypeScript |
 | AI/NLP       | OpenAI + spaCy |
-| Graph DB     | Neo4j |
+| Graph DB     | ONgDB |
 | Vector DB    | Weaviate (or in-memory for MVP) |
 | M365 Data    | Microsoft Graph API |
 | Auth         | Azure AD OAuth2 |
