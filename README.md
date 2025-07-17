@@ -20,7 +20,7 @@ This project connects to a Microsoft 365 tenant and automatically:
 | Backend API  | FastAPI (Python) |
 | Frontend     | Remix.js + TypeScript |
 | AI/NLP       | OpenAI + spaCy |
-| Graph DB     | ONgDB |
+| Graph DB     | Neo4j Community |
 | Vector DB    | Milvus or Chroma TBD |
 | M365 Data    | Microsoft Graph API |
 | Auth         | Azure AD OAuth2 |
@@ -62,7 +62,7 @@ prroject-synapse/
 │
 ├── backend/         # FastAPI backend for API + ingestion
 ├── frontend/        # Remix.js frontend UI
-├── graph-db/        # ONgDB queries and ontology schema
+├── graph-db/        # Neo4j queries and ontology schema
 ├── embeddings/      # Embedding + vector DB logic
 ├── infra/           # IaC (Terraform or ARM for Azure setup)
 ├── scripts/         # CLI tools for dev or ingestion
