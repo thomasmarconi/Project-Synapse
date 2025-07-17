@@ -21,7 +21,7 @@ This project connects to a Microsoft 365 tenant and automatically:
 | Frontend     | Remix.js + TypeScript |
 | AI/NLP       | OpenAI + spaCy |
 | Graph DB     | ONgDB |
-| Vector DB    | Milvus or Chroma TBD (or in-memory for MVP) |
+| Vector DB    | Milvus or Chroma TBD |
 | M365 Data    | Microsoft Graph API |
 | Auth         | Azure AD OAuth2 |
 | Cloud Infra  | Azure (Functions, Blob Storage, CosmosDB) |
