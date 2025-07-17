@@ -8,7 +8,7 @@ This project connects to a Microsoft 365 tenant and automatically:
 
 - 🔍 Ingests content and metadata from **SharePoint**, **OneDrive**, and **Teams**
 - 🧠 Uses **LLMs** to classify and semantically tag files, messages, and workflows
-- 🕸️ Builds a dynamic **Neo4j knowledge graph** linking people, documents, teams, and topics
+- 🕸️ Builds a dynamic **ONgDB knowledge graph** linking people, documents, teams, and topics
 - 💬 Enables **semantic search** and visual exploration of your organization’s knowledge structure
 
 ---
@@ -21,7 +21,7 @@ This project connects to a Microsoft 365 tenant and automatically:
 | Frontend     | Remix.js + TypeScript |
 | AI/NLP       | OpenAI + spaCy |
 | Graph DB     | ONgDB |
-| Vector DB    | Weaviate (or in-memory for MVP) |
+| Vector DB    | Milvus or Chroma TBD (or in-memory for MVP) |
 | M365 Data    | Microsoft Graph API |
 | Auth         | Azure AD OAuth2 |
 | Cloud Infra  | Azure (Functions, Blob Storage, CosmosDB) |
@@ -47,7 +47,6 @@ Fill in:
 
 - Azure client ID, secret, tenant ID
 - OpenAI API key
-- Neo4j credentials
 
 ### 3. Start Services (Dev Mode)
 You can run the backend, frontend, and Neo4j using Docker Compose:
@@ -62,8 +61,8 @@ Frontend will be at http://localhost:3000, and API at http://localhost:8000.
 prroject-synapse/
 │
 ├── backend/         # FastAPI backend for API + ingestion
-├── frontend/        # Next.js frontend UI
-├── graph-db/        # Neo4j queries and ontology schema
+├── frontend/        # Remix.js frontend UI
+├── graph-db/        # ONgDB queries and ontology schema
 ├── embeddings/      # Embedding + vector DB logic
 ├── infra/           # IaC (Terraform or ARM for Azure setup)
 ├── scripts/         # CLI tools for dev or ingestion
