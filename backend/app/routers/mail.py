@@ -1,4 +1,5 @@
 """Mail management routes for the application."""
+
 import asyncio
 import logging
 from fastapi import APIRouter
@@ -40,6 +41,7 @@ async def get_all_mail_messages():
     except (ValueError, AttributeError, TypeError) as e:
         return {"error": str(e)}
 
+
 @router.get("/messages/{user_id}")
 async def get_user_messages(user_id: str):
     """Function to get messages for a single user."""
@@ -48,4 +50,6 @@ async def get_user_messages(user_id: str):
         return [message for message in user_messages.value]
     except (ValueError, AttributeError, TypeError) as e:
         logging.warning("Failed to fetch messages for user %s: %s", user_id, e)
-        return []  # Return empty list if user messages fail, don't fail entire operation
+        return (
+            []
+        )  # Return empty list if user messages fail, don't fail entire operation
