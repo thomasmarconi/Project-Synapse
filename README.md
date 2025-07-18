@@ -18,7 +18,7 @@ This project connects to a Microsoft 365 tenant and automatically:
 | Layer        | Technology |
 |--------------|------------|
 | Backend API  | FastAPI (Python) |
-| Frontend     | Remix.js + TypeScript |
+| Frontend     | Next.js + TypeScript |
 | AI/NLP       | OpenAI + spaCy |
 | Graph DB     | Neo4j Community |
 | Vector DB    | Milvus or Chroma TBD |
@@ -61,7 +61,7 @@ Frontend will be at http://localhost:3000, and API at http://localhost:8000.
 prroject-synapse/
 │
 ├── backend/         # FastAPI backend for API + ingestion
-├── frontend/        # Remix.js frontend UI
+├── frontend/        # Next.js frontend UI
 ├── graph-db/        # Neo4j queries and ontology schema
 ├── embeddings/      # Embedding + vector DB logic
 ├── infra/           # IaC (Terraform or ARM for Azure setup)
