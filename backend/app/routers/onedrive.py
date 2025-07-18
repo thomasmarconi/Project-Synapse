@@ -4,7 +4,7 @@ This module defines the API endpoints for interacting
 with OneDrive resources using Microsoft Graph.
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Response
 from app.dependencies import graph_client
 
 router = APIRouter(
@@ -423,3 +423,103 @@ async def get_site_onedrive_items_all(site_id: str):
 
     except (ValueError, AttributeError, TypeError) as e:
         return {"error": f"Failed to retrieve all site OneDrive items: {str(e)}"}
+
+
+@router.get("/drives/{drive_id}/items/{item_id}")
+async def get_drive_item_info(drive_id: str, item_id: str):
+    """Endpoint to get information about a specific item from a OneDrive."""
+    try:
+        result = (
+            await graph_client.drives.by_drive_id(drive_id)
+            .items.by_drive_item_id(item_id)
+            .get()
+        )
+
+        if result:
+            return {
+                "id": result.id,
+                "name": result.name,
+                "size": result.size,
+                "created_datetime": result.created_date_time,
+                "modified_datetime": result.last_modified_date_time,
+                "web_url": result.web_url,
+                "folder": result.folder is not None,
+                "file": result.file is not None,
+                "download_url": (
+                    result.additional_data.get("@microsoft.graph.downloadUrl")
+                    if result.additional_data
+                    else None
+                ),
+                "mime_type": result.file.mime_type if result.file else None,
+                "parent_reference": (
+                    {
+                        "drive_id": (
+                            result.parent_reference.drive_id
+                            if result.parent_reference
+                            else None
+                        ),
+                        "id": (
+                            result.parent_reference.id
+                            if result.parent_reference
+                            else None
+                        ),
+                        "path": (
+                            result.parent_reference.path
+                            if result.parent_reference
+                            else None
+                        ),
+                    }
+                    if result.parent_reference
+                    else None
+                ),
+            }
+        return {"error": "Item not found"}
+    except (ValueError, AttributeError, TypeError) as e:
+        return {"error": f"Failed to retrieve OneDrive item: {str(e)}"}
+
+
+@router.get("/drives/{drive_id}/items/{item_id}/content")
+async def download_drive_item_content(drive_id: str, item_id: str):
+    """Endpoint to download the actual content of a specific item from OneDrive."""
+
+    try:
+        # First get item info to check if it's a file
+        item_info = (
+            await graph_client.drives.by_drive_id(drive_id)
+            .items.by_drive_item_id(item_id)
+            .get()
+        )
+
+        if not item_info:
+            return {"error": "Item not found"}
+
+        if item_info.folder is not None:
+            return {
+                "error": "Cannot download folder content. Use the folder items endpoint instead."
+            }
+
+        # Get the actual file content
+        content = (
+            await graph_client.drives.by_drive_id(drive_id)
+            .items.by_drive_item_id(item_id)
+            .content.get()
+        )
+
+        # Return as binary response with appropriate headers
+        media_type = (
+            item_info.file.mime_type
+            if item_info.file and item_info.file.mime_type
+            else "application/octet-stream"
+        )
+
+        return Response(
+            content=content,
+            media_type=media_type,
+            headers={
+                "Content-Disposition": f'attachment; filename="{item_info.name}"',
+                "Content-Length": str(item_info.size) if item_info.size else None,
+            },
+        )
+
+    except (ValueError, AttributeError, TypeError) as e:
+        return {"error": f"Failed to download OneDrive item: {str(e)}"}
