@@ -16,6 +16,18 @@ async def get_all_sharepoint_sites():
     result = await graph_client.sites.get_all_sites.get()
     return result
 
+@router.get("/sites/ids")
+async def get_all_sharepoint_sites_ids():
+    """Endpoint to retrieve all SharePoint site IDs in the tenant."""
+    result = await graph_client.sites.get_all_sites.get()
+    return [{"id": site.id, "name": site.name} for site in result.value] if result and result.value else []
+
+@router.get("/sites/{site_id}")
+async def get_sharepoint_site(site_id: str):
+    """Endpoint to retrieve a specific SharePoint site by its ID."""
+    result = await graph_client.sites.by_site_id(site_id).get()
+    return result
+
 @router.get("/sites/{site_id}/lists")
 async def get_sharepoint_lists(site_id: str):
     """Endpoint to retrieve all SharePoint lists for a specific site."""
