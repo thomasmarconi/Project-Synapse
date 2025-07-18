@@ -9,6 +9,15 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+@router.get("/")
+async def get_all_users():
+    """Endpoint to retrieve all user information in the tenant."""
+    try:
+        result = await graph_client.users.get()
+        return {"users": list(result.value)}
+    except (ValueError, AttributeError, TypeError) as e:
+        return {"error": str(e)}
+
 @router.get("/display-names")
 async def get_all_users_display_names():
     """Endpoint to retrieve all users in the tenant."""

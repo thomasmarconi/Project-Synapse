@@ -1,5 +1,6 @@
 """Mail management routes for the application."""
 import asyncio
+import logging
 from fastapi import APIRouter
 from app.dependencies import graph_client
 
@@ -9,7 +10,6 @@ router = APIRouter(
     # dependencies=[Depends(get_token_header)], # Uncomment if you want to enforce token validation
     responses={404: {"description": "Not found"}},
 )
-
 
 
 @router.get("/messages/all")
@@ -47,6 +47,5 @@ async def get_user_messages(user_id: str):
         user_messages = await graph_client.users.by_user_id(user_id).messages.get()
         return [message for message in user_messages.value]
     except (ValueError, AttributeError, TypeError) as e:
-        import logging
-        logging.warning(f"Failed to fetch messages for user {user_id}: {e}")
+        logging.warning("Failed to fetch messages for user %s: %s", user_id, e)
         return []  # Return empty list if user messages fail, don't fail entire operation
