@@ -48,7 +48,7 @@ Fill in:
 - Azure client ID, secret, tenant ID
 - OpenAI API key
 
-### 3. Start Services (Dev Mode)
+### 3. Start Services (Dev Mode) -- Not implemented yet
 You can run the backend, frontend, and Neo4j using Docker Compose:
 
 ```bash
